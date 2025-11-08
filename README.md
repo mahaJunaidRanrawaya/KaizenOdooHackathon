@@ -1,0 +1,2 @@
+# KaizenOdooHackathon
+Odoo Idea
