@@ -12,7 +12,7 @@ class CSRActivity(models.Model):
     name = fields.Char(string="Activity Summary", required=True, tracking=True)
     
     employee_profile_id = fields.Many2one('csr.employee.profile', string="Employee Profile", required=True, tracking=True)
-    employee_id = fields.Many2one(related='employee_profile_id.employee_id', string="HR Employee", store=True, readonly=True) 
+    employee_id = fields.Many2one(related='employee_profile_id.employee_id', string="HR Employee", store=True, readonly=True)  
     department_id = fields.Many2one(related='employee_profile_id.department_id', string="Department", store=True, readonly=True)
     
     date = fields.Date(string="Date", default=fields.Date.context_today, tracking=True)
@@ -20,7 +20,7 @@ class CSRActivity(models.Model):
     donation_amount = fields.Monetary(string="Donation Amount", currency_field='company_currency_id')
     
     company_currency_id = fields.Many2one(
-        related='employee_profile_id.employee_id.company_id.currency_id', 
+        related='employee_profile_id.employee_id.company_id.currency_id',  
         string='Company Currency', 
         readonly=True
     )
@@ -39,7 +39,7 @@ class CSRActivity(models.Model):
     
     # AI/Impact Fields
     sdg_category = fields.Selection([
-        ('sdg1', 'SDG 1: No Poverty'), ('sdg2', 'SDG 2: Zero Hunger'), 
+        ('sdg1', 'SDG 1: No Poverty'), ('sdg2', 'SDG 2: Zero Hunger'),  
         ('sdg3', 'SDG 3: Good Health and Well-being'), ('sdg4', 'SDG 4: Quality Education'),
         ('sdg5', 'SDG 5: Gender Equality'), ('sdg6', 'SDG 6: Clean Water and Sanitation'),
         ('sdg7', 'SDG 7: Affordable and Clean Energy'), ('sdg8', 'SDG 8: Decent Work and Economic Growth'),
@@ -73,7 +73,7 @@ class CSRActivity(models.Model):
             elif "food" in desc or "hunger" in desc:
                 rec.sdg_category = 'sdg2'
             elif "poverty" in desc:
-                rec.sdg_category = 'sdg1L'
+                rec.sdg_category = 'sdg1'
             else:
                 rec.sdg_category = 'other'
 
@@ -103,7 +103,7 @@ class CSRActivity(models.Model):
                 donation_points = rec.donation_amount * 0.5 if rec.donation_amount else 0.0
                 
                 bonus_points = 0
-                if rec.sdg_category in lacking_sdg_codes: 
+                if rec.sdg_category in lacking_sdg_codes:  
                     bonus_points = base_points * 0.5 # 50% bonus
                 
                 rec.impact_points = int(base_points + donation_points + bonus_points)
@@ -117,7 +117,7 @@ class CSRActivity(models.Model):
     def action_approve(self):
         self.ensure_one()
         self.status = 'approved'
-        self.employee_profile_id._compute_csr_metrics() 
+        self.employee_profile_id._compute_csr_metrics()  
         if self.department_id:
             department_csr = self.env['csr.department'].search([('department_id', '=', self.department_id.id)], limit=1)
             if department_csr:
@@ -125,12 +125,12 @@ class CSRActivity(models.Model):
         org = self.env['csr.organization'].search([], limit=1)
         if org:
             # This triggers all the dashboard computes
-            org.action_refresh_dashboard_metrics() 
+            org.action_refresh_dashboard_metrics()  
 
     def action_reject(self):
         self.ensure_one()
-        self.status = 'rejected' 
-        self._compute_impact_points() 
+        self.status = 'rejected'  
+        self._compute_impact_points()  
         self.employee_profile_id._compute_csr_metrics()
         if self.department_id:
             department_csr = self.env['csr.department'].search([('department_id', '=', self.department_id.id)], limit=1)

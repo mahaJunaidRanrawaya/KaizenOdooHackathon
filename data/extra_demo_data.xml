@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+    
+        <!-- ================================================================= -->
+        <!-- Departments (Original) -->
+        <!-- ================================================================= -->
         <record id="hr_dept_finance" model="hr.department">
             <field name="name">Finance</field>
         </record>
@@ -11,6 +15,22 @@
             <field name="name">Operations</field>
         </record>
 
+        <!-- Departments (Consolidated from previous files) -->
+        <record id="hr_dept_marketing" model="hr.department">
+            <field name="name">Marketing</field>
+        </record>
+        <record id="hr_dept_tech" model="hr.department">
+            <field name="name">Technology</field>
+        </record>
+
+        <!-- Departments (NEW) -->
+        <record id="hr_dept_legal" model="hr.department">
+            <field name="name">Legal</field>
+        </record>
+
+        <!-- ================================================================= -->
+        <!-- CSR Departments (Original) -->
+        <!-- ================================================================= -->
         <record id="csr_dept_finance" model="csr.department">
             <field name="department_id" ref="hr_dept_finance"/>
             <field name="carbon_budget">5000.0</field>
@@ -24,6 +44,25 @@
             <field name="carbon_budget">30000.0</field>
         </record>
 
+        <!-- CSR Departments (Consolidated from previous files) -->
+        <record id="csr_dept_marketing" model="csr.department">
+            <field name="department_id" ref="hr_dept_marketing"/>
+            <field name="carbon_budget">15000.0</field>
+        </record>
+        <record id="csr_dept_tech" model="csr.department">
+            <field name="department_id" ref="hr_dept_tech"/>
+            <field name="carbon_budget">25000.0</field>
+        </record>
+        
+        <!-- CSR Departments (NEW) -->
+        <record id="csr_dept_legal" model="csr.department">
+            <field name="department_id" ref="hr_dept_legal"/>
+            <field name="carbon_budget">6000.0</field>
+        </record>
+
+        <!-- ================================================================= -->
+        <!-- Employees & Profiles (Original) -->
+        <!-- ================================================================= -->
         <record id="employee_demo_ahmed" model="hr.employee">
             <field name="department_id" ref="hr_dept_finance"/>
             <field name="name">Ahmed Al-Jaber (Employee)</field>
@@ -51,6 +90,47 @@
             <field name="employee_id" ref="employee_demo_mike"/>
         </record>
 
+        <!-- Employees & Profiles (Consolidated from previous files) -->
+        <record id="employee_demo_sarah" model="hr.employee">
+            <field name="department_id" ref="hr_dept_marketing"/>
+            <field name="name">Sarah Khan (Employee)</field>
+            <field name="work_email">sarah.k@kaizen.com</field>
+        </record>
+        <record id="profile_sarah" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_sarah"/>
+        </record>
+
+        <record id="employee_demo_omar" model="hr.employee">
+            <field name="department_id" ref="hr_dept_tech"/>
+            <field name="name">Omar Hassan (Manager)</field>
+            <field name="work_email">omar.h@kaizen.com</field>
+        </record>
+        <record id="profile_omar" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_omar"/>
+        </record>
+
+        <!-- Employees & Profiles (NEW) -->
+        <record id="employee_demo_layla" model="hr.employee">
+            <field name="department_id" ref="hr_dept_ops"/>
+            <field name="name">Layla Ibrahim (Employee)</field>
+            <field name="work_email">layla.i@kaizen.com</field>
+        </record>
+        <record id="profile_layla" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_layla"/>
+        </record>
+
+        <record id="employee_demo_david" model="hr.employee">
+            <field name="department_id" ref="hr_dept_legal"/>
+            <field name="name">David Chen (Employee)</field>
+            <field name="work_email">david.c@kaizen.com</field>
+        </record>
+        <record id="profile_david" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_david"/>
+        </record>
+        
+        <!-- ================================================================= -->
+        <!-- Rewards (Original) -->
+        <!-- ================================================================= -->
         <record id="reward_tshirt" model="csr.reward">
             <field name="name">Kaizen Sustainable T-Shirt</field>
             <field name="point_cost">150</field>
@@ -61,7 +141,57 @@
             <field name="point_cost">300</field>
             <field name="description">We will partner with Green Forest Association to plant a Ghaf tree in your name.</field>
         </record>
+        
+        <!-- Rewards (NEW) -->
+        <record id="reward_premium_mug" model="csr.reward">
+            <field name="name">Premium Reusable Coffee Mug</field>
+            <field name="point_cost">100</field>
+            <field name="description">A high-quality, sustainable coffee mug to reduce disposable waste.</field>
+        </record>
+        <record id="reward_donation_match" model="csr.reward">
+            <field name="name">100 AED Donation Match</field>
+            <field name="point_cost">250</field>
+            <field name="description">The company will match your next 100 AED donation to a pre-approved NGO.</field>
+        </record>
+        <record id="reward_impact_day" model="csr.reward">
+            <field name="name">Extra Paid Impact Day Off</field>
+            <field name="point_cost">500</field>
+            <field name="description">Redeem 500 Impact Points for an extra paid day off to volunteer or rest. Managers will be notified for approval.</field>
+        </record>
+        <record id="reward_eco_bottle" model="csr.reward">
+            <field name="name">Insulated Water Bottle</field>
+            <field name="point_cost">120</field>
+            <field name="description">A premium, insulated water bottle to help you stay hydrated and reduce plastic use.</field>
+        </record>
+        
+        <!-- ================================================================= -->
+        <!-- Opportunities (NEW) -->
+        <!-- ================================================================= -->
+        <record id="opportunity_food_bank" model="csr.opportunity">
+            <field name="name">Food Bank Sorting (Evening Shift)</field>
+            <field name="ngo">UAE Food Bank</field>
+            <field name="date">2025-11-25</field>
+            <field name="location_name">Al Quoz Warehouse</field>
+            <field name="linked_sdg">sdg2</field>
+        </record>
+        <record id="opportunity_mangrove_planting" model="csr.opportunity">
+            <field name="name">Mangrove Planting at Jebel Ali</field>
+            <field name="ngo">Emirates Nature-WWF</field>
+            <field name="date">2025-12-02</field>
+            <field name="location_name">Jebel Ali Wildlife Sanctuary</field>
+            <field name="linked_sdg">sdg14</field>
+        </record>
+        <record id="opportunity_code_ngo" model="csr.opportunity">
+            <field name="name">Code for a Cause: NGO Website</field>
+            <field name="ngo">Tech for Good UAE</field>
+            <field name="date">2025-11-30</field>
+            <field name="location_name">Remote</field>
+            <field name="linked_sdg">sdg9</field>
+        </record>
 
+        <!-- ================================================================= -->
+        <!-- Activities (Original) -->
+        <!-- ================================================================= -->
         <record id="activity_ahmed_1" model="csr.activity">
             <field name="name">Financial Literacy Workshop for Youth</field>
             <field name="employee_profile_id" ref="profile_ahmed"/>
@@ -70,7 +200,6 @@
             <field name="description">Volunteered to teach basic budgeting and finance skills at a local school (education/school keywords).</field>
             <field name="status">approved</field>
         </record>
-
         <record id="activity_fatima_1" model="csr.activity">
             <field name="name">Hospital Visit - Children's Ward</field>
             <field name="employee_profile_id" ref="profile_fatima"/>
@@ -79,7 +208,6 @@
             <field name="description">Spent time with children at the Al Jalila Hospital (health/hospital keywords).</field>
             <field name="status">approved</field>
         </record>
-
         <record id="activity_mike_1" model="csr.activity">
             <field name="name">Sorting donations at Red Crescent</field>
             <field name="employee_profile_id" ref="profile_mike"/>
@@ -89,6 +217,7 @@
             <field name="status">submitted</field>
         </record>
         
+        <!-- Activities (Consolidated from previous files) -->
         <record id="activity_sarah_4" model="csr.activity">
             <field name="name">Plan marketing for food drive</field>
             <field name="employee_profile_id" ref="profile_sarah"/>
@@ -97,7 +226,6 @@
             <field name="description">Drafting emails for the upcoming charity kitchen event.</field>
             <field name="status">draft</field>
         </record>
-
         <record id="activity_omar_3" model="csr.activity">
             <field name="name">Donation to local pet shelter</field>
             <field name="employee_profile_id" ref="profile_omar"/>
@@ -108,5 +236,46 @@
             <field name="rejection_reason">Missing proof of donation. Please upload the receipt or transfer confirmation.</field>
         </record>
         
+        <!-- Activities (NEW) -->
+        <record id="activity_layla_1" model="csr.activity">
+            <field name="name">Charity Run Logistics</field>
+            <field name="employee_profile_id" ref="profile_layla"/>
+            <field name="date">2025-10-30</field>
+            <field name="hours">6.0</field>
+            <field name="description">Coordinated logistics and route planning for the Dubai Charity Marathon.</field>
+            <field name="status">approved</field>
+        </record>
+        <record id="activity_david_1" model="csr.activity">
+            <field name="name">Pro-bono Legal Advice</field>
+            <field name="employee_profile_id" ref="profile_david"/>
+            <field name="date">2025-11-05</field>
+            <field name="hours">3.0</field>
+            <field name="description">Provided pro-bono legal consultation for a local non-profit organization.</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_ahmed_2" model="csr.activity">
+            <field name="name">Donation to Education Fund</field>
+            <field name="employee_profile_id" ref="profile_ahmed"/>
+            <field name="date">2025-11-01</field>
+            <field name="donation_amount">150.0</field>
+            <field name="description">Donation to the 'Education First' charity.</field>
+            <field name="status">approved</field>
+        </record>
+        <record id="activity_fatima_2" model="csr.activity">
+            <field name="name">Mentorship Program Kick-off</field>
+            <field name="employee_profile_id" ref="profile_fatima"/>
+            <field name="date">2Two_Weeks_Ago</field> <!-- Will be set to 2025-11-10 -->
+            <field name="hours">1.0</field>
+            <field name="description">Initial call with 'Reach Mentoring' to join as a mentor for Women in Tech.</field>
+            <field name="status">draft</field>
+        </record>
+        <record id="activity_mike_2" model="csr.activity">
+            <field name="name">Sign up for Food Bank Sorting</field>
+            <field name="employee_profile_id" ref="profile_mike"/>
+            <field name="date">2025-11-25</field>
+            <field name="description">Registered to volunteer at the UAE Food Bank.</field>
+            <field name="status">draft</field>
+        </record>
+
     </data>
 </odoo>

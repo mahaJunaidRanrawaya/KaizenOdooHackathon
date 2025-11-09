@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api
+import json  # <-- Import json
+import logging # <-- Import logging
+
+_logger = logging.getLogger(__name__) # <-- Add the logger
 
 class CSROpportunity(models.Model):
     _name = 'csr.opportunity'
@@ -14,7 +18,7 @@ class CSROpportunity(models.Model):
     location_name = fields.Char(string="Location")
     
     linked_sdg = fields.Selection([
-        ('sdg1', 'SDG 1: No Poverty'), ('sdg2', 'SDG 2: Zero Hunger'), 
+        ('sdg1', 'SDG 1: No Poverty'), ('sdg2', 'SDG 2: Zero Hunger'),  
         ('sdg3', 'SDG 3: Good Health and Well-being'), ('sdg4', 'SDG 4: Quality Education'),
         ('sdg5', 'SDG 5: Gender Equality'), ('sdg6', 'SDG 6: Clean Water and Sanitation'),
         ('sdg7', 'SDG 7: Affordable and Clean Energy'), ('sdg8', 'SDG 8: Decent Work and Economic Growth'),
@@ -25,31 +29,36 @@ class CSROpportunity(models.Model):
         ('sdg17', 'SDG 17: Partnerships to achieve the Goal'), ('other', 'Other/Not Classified')
     ], string="Linked SDG", default='other')
     
-    # In a real app, you might add a geo-point field for a map view
-    # location_latitude = fields.Float(string="Latitude")
-    # location_longitude = fields.Float(string="Longitude")
-    
     @api.model
     def _fetch_opportunities_from_globalgiving(self):
         """
         Scheduled action to fetch new opportunities from GlobalGiving API.
         """
-        self.env.cr.execute("INSERT INTO ir_logging(name, type, message) VALUES (%s, %s, %s)", 
-                            ('CSROpportunity._fetch_opportunities_from_globalgiving', 'info', 'Starting GlobalGiving opportunity fetch.'))
+        # --- FIX: Replaced raw SQL with Odoo's logger ---
+        _logger.info("Starting GlobalGiving opportunity fetch.")
         
         # 1. Get the organization's lacking SDGs
         org = self.env['csr.organization'].search([], limit=1)
         if not org:
-            self.env.cr.execute("INSERT INTO ir_logging(name, type, message) VALUES (%s, %s, %s)", 
-                                ('CSROpportunity._fetch_opportunities_from_globalgiving', 'warning', 'No csr.organization record found. Cannot determine lacking SDGs.'))
+            # --- FIX: Replaced raw SQL with Odoo's logger ---
+            _logger.warning("No csr.organization record found. Cannot determine lacking SDGs.")
             return
             
-        lacking_sdg_codes = org.lacking_sdgs.mapped('code')
+        lacking_sdg_codes = []
+        if org.sdg_metrics:
+             try:
+                sdg_percentages = json.loads(org.sdg_metrics)
+                filtered_sdgs = {k: v for k, v in sdg_percentages.items() if k != 'other'}
+                sorted_sdgs = sorted(filtered_sdgs.items(), key=lambda item: item[1]['percentage'])
+                lacking_sdg_codes = [item[0] for item in sorted_sdgs][:3]
+             except (json.JSONDecodeError, TypeError):
+                 lacking_sdg_codes = ['sdg4', 'sdg13'] # Fallback
+        
         if not lacking_sdg_codes:
-            self.env.cr.execute("INSERT INTO ir_logging(name, type, message) VALUES (%s, %s, %s)", 
-                                ('CSROpportunity._fetch_opportunities_from_globalgiving', 'info', 'No lacking SDGs found. Fetching general opportunities.'))
+            # --- FIX: Replaced raw SQL with Odoo's logger ---
+            _logger.info("No lacking SDGs found. Fetching general opportunities.")
             # Fallback to fetching a few general opportunities if no lacking SDGs are identified
-            lacking_sdg_codes = ['sdg4', 'sdg13'] 
+            lacking_sdg_codes = ['sdg4', 'sdg13']  
 
         # 2. Fetch opportunities using the utility method
         opportunities_data = self.env['csr.utils'].fetch_globalgiving_opportunities(lacking_sdg_codes)
@@ -72,6 +81,6 @@ class CSROpportunity(models.Model):
                 existing_opportunity.write(vals)
             else:
                 self.create(vals)
-                
-        self.env.cr.execute("INSERT INTO ir_logging(name, type, message) VALUES (%s, %s, %s)", 
-                            ('CSROpportunity._fetch_opportunities_from_globalgiving', 'info', f'Finished GlobalGiving opportunity fetch. Created/Updated {len(opportunities_data)} records.'))
+        
+        # --- FIX: Replaced raw SQL with Odoo's logger ---
+        _logger.info(f'Finished GlobalGiving opportunity fetch. Created/Updated {len(opportunities_data)} records.')

@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api, _
-from odoo.exceptions import ValidationError # Import ValidationError
+from odoo.exceptions import ValidationError, UserError 
 from dateutil.relativedelta import relativedelta
+import logging 
+
+_logger = logging.getLogger(__name__)
 
 class CSREmployeeProfile(models.Model):
     _name = 'csr.employee.profile'
     _description = 'CSR Employee Profile Extension'
     _order = "total_impact_points desc"
     
-    _inherit = ['mail.thread'] 
+    _inherit = ['mail.thread']  
 
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True, ondelete='cascade', index=True)
     
@@ -26,10 +29,9 @@ class CSREmployeeProfile(models.Model):
     rank_display = fields.Char(string="Current Rank (Total Points)", compute='_compute_rank', store=False)
     improvement_rank_display = fields.Char(string="Rank (Improvement)", compute='_compute_rank', store=False)
     
-    # Fields for improvement calculation
     last_quarter_points = fields.Integer(string="Last Quarter Points", compute='_compute_last_quarter_points', store=True)
     point_improvement = fields.Integer(string="Point Improvement", compute='_compute_point_improvement', store=True)
-
+    
     @api.depends('activity_ids.status', 'activity_ids.impact_points', 'activity_ids.hours', 'activity_ids.donation_amount')
     def _compute_csr_metrics(self):
         for employee_profile in self:
@@ -41,8 +43,6 @@ class CSREmployeeProfile(models.Model):
     @api.depends('activity_ids.date', 'activity_ids.impact_points', 'activity_ids.status')
     def _compute_last_quarter_points(self):
         today = fields.Date.today()
-        # Calculate the start and end date of the previous quarter
-        # Simple approximation: 90 days ago to 180 days ago
         end_date = today - relativedelta(days=90)
         start_date = today - relativedelta(days=180)
 
@@ -53,27 +53,17 @@ class CSREmployeeProfile(models.Model):
     @api.depends('total_impact_points', 'last_quarter_points')
     def _compute_point_improvement(self):
         for employee_profile in self:
-            # Improvement is current total points minus last quarter's points
             employee_profile.point_improvement = employee_profile.total_impact_points - employee_profile.last_quarter_points
 
-    # --- FIX ---
-    # 1. Removed the duplicate _compute_rank method.
-    # 2. Changed dependencies to point to source 'activity_ids' fields.
-    #    This prevents a circular dependency (store=False compute depending on store=True compute).
-    # 3. Added manual calls to upstream computes to ensure data is fresh for ranking.
     @api.depends('activity_ids.status', 'activity_ids.impact_points', 'activity_ids.date')
     def _compute_rank(self):
-        # Manually trigger upstream computes to ensure data is fresh
-        # (Odoo might run this store=False compute first)
         self._compute_csr_metrics()
         self._compute_last_quarter_points()
         self._compute_point_improvement()
         
-        # 1. Rank by Total Points
         sorted_profiles_total = self.env['csr.employee.profile'].search([], order='total_impact_points desc')
         rank_map_total = {profile.id: rank + 1 for rank, profile in enumerate(sorted_profiles_total)}
         
-        # 2. Rank by Improvement
         sorted_profiles_improvement = self.env['csr.employee.profile'].search([], order='point_improvement desc')
         rank_map_improvement = {profile.id: rank + 1 for rank, profile in enumerate(sorted_profiles_improvement)}
         
@@ -103,10 +93,29 @@ class CSREmployeeProfile(models.Model):
             'type': 'ir.actions.act_window',
             'name': _('My Activities'),
             'res_model': 'csr.activity',
-            'view_mode': 'list,form', # Use 'list', not 'tree'
+            'view_mode': 'list,form',
             'domain': [('employee_profile_id', '=', self.id)],
             'context': {
                 'default_employee_profile_id': self.id,
                 'default_employee_id': self.employee_id.id
+            }
+        }
+        
+    # --- MODIFIED: This function now calls the central utility file ---
+    def action_share_on_linkedin(self):
+        self.ensure_one()
+        
+        # 1. Call the central utility function to get the simulated message
+        message = self.env['csr.utils'].simulate_linkedin_share(self)
+        
+        # 2. Return the success notification
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('LinkedIn Share (Simulated)'),
+                'message': _("Successfully posted to LinkedIn: '%s'") % message,
+                'sticky': True, 
+                'type': 'success',
             }
         }

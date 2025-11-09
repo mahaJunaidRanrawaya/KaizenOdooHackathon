@@ -16,5 +16,52 @@
             <field name="point_cost">250</field>
             <field name="description">The company will match your next 100 AED donation to a pre-approved NGO.</field>
         </record>
+
+        <record id="reward_tree_planting" model="csr.reward">
+            <field name="name">Plant a Tree in Your Name</field>
+            <field name="point_cost">50</field>
+            <field name="description">We will partner with a local environmental group to plant one tree in your name.</field>
+        </record>
+        <record id="reward_insulated_bottle" model="csr.reward">
+            <field name="name">Insulated Branded Water Bottle</field>
+            <field name="point_cost">120</field>
+            <field name="description">A premium, insulated water bottle to help you stay hydrated and reduce plastic use.</field>
+        </record>
+        <record id="reward_sustainability_workshop" model="csr.reward">
+            <field name="name">Sustainability Workshop Access</field>
+            <field name="point_cost">350</field>
+            <field name="description">Gain access to an exclusive online workshop on a sustainability topic (e.g., home composting, sustainable investing).</field>
+        </record>
+        <record id="reward_lunch_leadership" model="csr.reward">
+            <field name="name">Lunch with Leadership</field>
+            <field name="point_cost">750</field>
+            <field name="description">Redeem your points for a 1-on-1 lunch with a member of the company's leadership team to discuss sustainability and more.</field>
+        </record>
+
+        <record id="reward_tote_bag" model="csr.reward">
+            <field name="name">Eco-Friendly Tote Bag</field>
+            <field name="point_cost">80</field>
+            <field name="description">A stylish, durable tote bag made from recycled materials for your daily shopping.</field>
+        </record>
+        <record id="reward_eco_notebook" model="csr.reward">
+            <field name="name">Recycled Paper Notebook</field>
+            <field name="point_cost">150</field>
+            <field name="description">A high-quality A5 notebook and pen set, made entirely from recycled materials.</field>
+        </record>
+        <record id="reward_donation_match_small" model="csr.reward">
+            <field name="name">50 AED Donation Match</field>
+            <field name="point_cost">125</field>
+            <field name="description">A smaller donation match. The company will match your next 50 AED donation to a pre-approved NGO.</field>
+        </record>
+        <record id="reward_carbon_offset" model="csr.reward">
+            <field name="name">Personal Carbon Offset</field>
+            <field name="point_cost">400</field>
+            <field name="description">The company will make a contribution to a certified carbon offset project on your behalf.</field>
+        </record>
+        <record id="reward_commute_subsidy" model="csr.reward">
+            <field name="name">Green Commute Subsidy</field>
+            <field name="point_cost">1000</field>
+            <field name="description">Redeem for a 200 AED subsidy on a public transport pass or bicycle maintenance to encourage green commuting.</field>
+        </record>
     </data>
 </odoo>

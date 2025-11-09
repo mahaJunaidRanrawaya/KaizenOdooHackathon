@@ -8,6 +8,21 @@
         <record id="hr_dept_tech" model="hr.department">
             <field name="name">Technology</field>
         </record>
+        <record id="hr_dept_sales" model="hr.department">
+            <field name="name">Sales</field>
+        </record>
+        <record id="hr_dept_hr" model="hr.department">
+            <field name="name">Human Resources</field>
+        </record>
+        <record id="hr_dept_finance" model="hr.department">
+            <field name="name">Finance</field>
+        </record>
+        <record id="hr_dept_operations" model="hr.department">
+            <field name="name">Operations</field>
+        </record>
+        <record id="hr_dept_rd" model="hr.department">
+            <field name="name">Research &amp; Development</field>
+        </record>
         
         <record id="csr_dept_marketing" model="csr.department">
             <field name="department_id" ref="hr_dept_marketing"/>
@@ -17,27 +32,109 @@
             <field name="department_id" ref="hr_dept_tech"/>
             <field name="carbon_budget">25000.0</field>
         </record>
+        <record id="csr_dept_sales" model="csr.department">
+            <field name="department_id" ref="hr_dept_sales"/>
+            <field name="carbon_budget">12000.0</field>
+        </record>
+        <record id="csr_dept_hr" model="csr.department">
+            <field name="department_id" ref="hr_dept_hr"/>
+            <field name="carbon_budget">10000.0</field>
+        </record>
+        <record id="csr_dept_finance" model="csr.department">
+            <field name="department_id" ref="hr_dept_finance"/>
+            <field name="carbon_budget">8000.0</field>
+        </record>
+        <record id="csr_dept_operations" model="csr.department">
+            <field name="department_id" ref="hr_dept_operations"/>
+            <field name="carbon_budget">18000.0</field>
+        </record>
+        <record id="csr_dept_rd" model="csr.department">
+            <field name="department_id" ref="hr_dept_rd"/>
+            <field name="carbon_budget">22000.0</field>
+        </record>
         
         <record id="employee_demo_sarah" model="hr.employee">
             <field name="department_id" ref="hr_dept_marketing"/>
             <field name="name">Sarah Khan (Employee)</field>
             <field name="work_email">sarah.k@kaizen.com</field>
             <field name="work_phone">+971501112233</field>
-            </record>
-        
+        </record>
         <record id="employee_demo_omar" model="hr.employee">
             <field name="department_id" ref="hr_dept_tech"/>
             <field name="name">Omar Hassan (Manager)</field>
             <field name="work_email">omar.h@kaizen.com</field>
             <field name="work_phone">+971509988776</field>
-            </record>
+        </record>
+        <record id="employee_demo_ahmed" model="hr.employee">
+            <field name="department_id" ref="hr_dept_sales"/>
+            <field name="name">Ahmed Al-Mansoori</field>
+            <field name="work_email">ahmed.m@kaizen.com</field>
+            <field name="work_phone">+971501234567</field>
+        </record>
+        <record id="employee_demo_fatima" model="hr.employee">
+            <field name="department_id" ref="hr_dept_hr"/>
+            <field name="name">Fatima Al-Jaber</field>
+            <field name="work_email">fatima.j@kaizen.com</field>
+            <field name="work_phone">+971507654321</field>
+        </record>
+        <record id="employee_demo_david" model="hr.employee">
+            <field name="department_id" ref="hr_dept_tech"/>
+            <field name="name">David Lee</field>
+            <field name="parent_id" ref="employee_demo_omar"/>
+            <field name="work_email">david.l@kaizen.com</field>
+            <field name="work_phone">+971501122334</field>
+        </record>
+        <record id="employee_demo_mariam" model="hr.employee">
+            <field name="department_id" ref="hr_dept_finance"/>
+            <field name="name">Mariam Al-Zaabi</field>
+            <field name="work_email">mariam.z@kaizen.com</field>
+            <field name="work_phone">+971502233445</field>
+        </record>
+        <record id="employee_demo_khalid" model="hr.employee">
+            <field name="department_id" ref="hr_dept_operations"/>
+            <field name="name">Khalid Mohammed</field>
+            <field name="work_email">khalid.m@kaizen.com</field>
+            <field name="work_phone">+971503344556</field>
+        </record>
+        <record id="employee_demo_lin" model="hr.employee">
+            <field name="department_id" ref="hr_dept_rd"/>
+            <field name="name">Lin Chen</field>
+            <field name="work_email">lin.c@kaizen.com</field>
+            <field name="work_phone">+971504455667</field>
+        </record>
+        <record id="employee_demo_youssef" model="hr.employee">
+            <field name="department_id" ref="hr_dept_sales"/>
+            <field name="name">Youssef Ibrahim</field>
+            <field name="work_email">youssef.i@kaizen.com</field>
+            <field name="work_phone">+971505566778</field>
+        </record>
 
         <record id="profile_sarah" model="csr.employee.profile">
             <field name="employee_id" ref="employee_demo_sarah"/>
         </record>
-
         <record id="profile_omar" model="csr.employee.profile">
             <field name="employee_id" ref="employee_demo_omar"/>
+        </record>
+        <record id="profile_ahmed" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_ahmed"/>
+        </record>
+        <record id="profile_fatima" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_fatima"/>
+        </record>
+        <record id="profile_david" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_david"/>
+        </record>
+        <record id="profile_mariam" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_mariam"/>
+        </record>
+        <record id="profile_khalid" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_khalid"/>
+        </record>
+        <record id="profile_lin" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_lin"/>
+        </record>
+        <record id="profile_youssef" model="csr.employee.profile">
+            <field name="employee_id" ref="employee_demo_youssef"/>
         </record>
 
         <record id="opportunity_beach_cleanup" model="csr.opportunity">
@@ -61,46 +158,170 @@
             <field name="location_name">Remote</field>
             <field name="linked_sdg">sdg4</field>
         </record>
+        <record id="opportunity_food_bank" model="csr.opportunity">
+            <field name="name">Food Bank Sorting (Evening Shift)</field>
+            <field name="ngo">UAE Food Bank</field>
+            <field name="date">2025-11-25</field>
+            <field name="location_name">Al Quoz Warehouse</field>
+            <field name="linked_sdg">sdg2</field>
+        </record>
+        <record id="opportunity_mentorship" model="csr.opportunity">
+            <field name="name">Women in Tech Mentorship Program</field>
+            <field name="ngo">Reach Mentoring</field>
+            <field name="date">2025-12-01</field>
+            <field name="location_name">Remote (Kick-off event at Office)</field>
+            <field name="linked_sdg">sdg5</field>
+        </record>
+        <record id="opportunity_senior_care" model="csr.opportunity">
+            <field name="name">Senior Care Center Visit</field>
+            <field name="ngo">Elderly Care Foundation</field>
+            <field name="date">2025-11-30</field>
+            <field name="location_name">Dubai Senior Care Center</field>
+            <field name="linked_sdg">sdg3</field>
+        </record>
+        <record id="opportunity_tech_donation" model="csr.opportunity">
+            <field name="name">Refurbished Computer Donation Drive</field>
+            <field name="ngo">Digital Access for All</field>
+            <field name="date">2025-12-10</field>
+            <field name="location_name">Company Headquarters</field>
+            <field name="linked_sdg">sdg9</field>
+        </record>
+        <record id="opportunity_recycling_workshop" model="csr.opportunity">
+            <field name="name">Community Recycling Workshop</field>
+            <field name="ngo">Sustainable Living Initiative</field>
+            <field name="date">2025-11-28</field>
+            <field name="location_name">Community Center - Al Barsha</field>
+            <field name="linked_sdg">sdg12</field>
+        </record>
 
         <record id="activity_sarah_1" model="csr.activity">
             <field name="name">Cleaned a polluted section of the canal</field>
-            <field name="employee_profile_id" ref="profile_sarah"/> <field name="date">2025-10-01</field>
+            <field name="employee_profile_id" ref="profile_sarah"/>
+            <field name="date">2025-10-01</field>
             <field name="hours">8.0</field>
             <field name="description">Spent a full day cleaning up plastic and debris from the Dubai Marina canal. Focused on removing large nets and microplastics, directly supporting marine life (water/beach keywords).</field>
             <field name="status">approved</field>
         </record>
-
         <record id="activity_sarah_2" model="csr.activity">
             <field name="name">Planted 10 Ghaf trees</field>
-            <field name="employee_profile_id" ref="profile_sarah"/> <field name="date">2025-10-15</field>
+            <field name="employee_profile_id" ref="profile_sarah"/>
+            <field name="date">2025-10-15</field>
             <field name="hours">4.0</field>
             <field name="description">Participated in a regional tree planting event to help with desertification efforts (tree/forest keywords).</field>
             <field name="status">approved</field>
         </record>
-        
         <record id="activity_omar_1" model="csr.activity">
             <field name="name">Donation to a children's education fund</field>
-            <field name="employee_profile_id" ref="profile_omar"/> <field name="date">2025-09-20</field>
+            <field name="employee_profile_id" ref="profile_omar"/>
+            <field name="date">2025-09-20</field>
             <field name="donation_amount">500.0</field>
             <field name="description">Monthly payroll deduction to support Quality Education for underprivileged students (education/school keywords).</field>
             <field name="status">approved</field>
         </record>
-        
         <record id="activity_sarah_3" model="csr.activity">
             <field name="name">Weekend tutoring session for a local school</field>
-            <field name="employee_profile_id" ref="profile_sarah"/> <field name="date">2025-11-01</field>
+            <field name="employee_profile_id" ref="profile_sarah"/>
+            <field name="date">2025-11-01</field>
             <field name="hours">3.0</field>
             <field name="description">Tutored high school students in advanced mathematics. Uploaded completion certificate (education/school keywords).</field>
             <field name="status">submitted</field>
         </record>
-        
         <record id="activity_omar_2" model="csr.activity">
             <field name="name">Food drive planning meeting</field>
-            <field name="employee_profile_id" ref="profile_omar"/> <field name="date">2025-11-05</field>
+            <field name="employee_profile_id" ref="profile_omar"/>
+            <field name="date">2025-11-05</field>
             <field name="hours">1.5</field>
             <field name="description">Initial planning session for the company-wide Zero Hunger initiative (SDG 2) (food/hunger keywords).</field>
             <field name="status">draft</field>
         </record>
         
+        <record id="activity_ahmed_1" model="csr.activity">
+            <field name="name">Donated to Emirates Red Crescent</field>
+            <field name="employee_profile_id" ref="profile_ahmed"/>
+            <field name="date">2025-10-28</field>
+            <field name="donation_amount">250.0</field>
+            <field name="description">Donation for international humanitarian aid (humanitarian keywords).</field>
+            <field name="status">approved</field>
+        </record>
+        <record id="activity_fatima_1" model="csr.activity">
+            <field name="name">Organized HR policy for volunteer leave</field>
+            <field name="employee_profile_id" ref="profile_fatima"/>
+            <field name="date">2025-11-03</field>
+            <field name="hours">5.0</field>
+            <field name="description">Drafted and finalized the new company policy for paid volunteer time off, promoting SDG 8 (Decent Work).</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_david_1" model="csr.activity">
+            <field name="name">Volunteered at animal shelter</field>
+            <field name="employee_profile_id" ref="profile_david"/>
+            <field name="date">2025-11-08</field>
+            <field name="hours">4.0</field>
+            <field name="description">Helped clean enclosures and walk dogs at a local animal welfare shelter (animal keywords).</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_omar_3" model="csr.activity">
+            <field name="name">Tech for Good - Code Review</field>
+            <field name="employee_profile_id" ref="profile_omar"/>
+            <field name="date">2025-11-07</field>
+            <field name="hours">2.0</field>
+            <field name="description">Pro-bono code review for a local NGO's new website. Helping them improve site security and performance (tech/code keywords).</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_sarah_4" model="csr.activity">
+            <field name="name">Attending Beach Cleanup</field>
+            <field name="employee_profile_id" ref="profile_sarah"/>
+            <field name="date">2025-11-20</field>
+            <field name="description">Signed up for the Jumeirah Beach Cleanup Drive.</field>
+            <field name="status">draft</field>
+        </record>
+        <record id="activity_mariam_1" model="csr.activity">
+            <field name="name">Financial Literacy Workshop for Youth</field>
+            <field name="employee_profile_id" ref="profile_mariam"/>
+            <field name="date">2025-10-22</field>
+            <field name="hours">6.0</field>
+            <field name="description">Conducted financial literacy workshop for underprivileged youth in partnership with local community center.</field>
+            <field name="status">approved</field>
+        </record>
+        <record id="activity_khalid_1" model="csr.activity">
+            <field name="name">Supply Chain Sustainability Audit</field>
+            <field name="employee_profile_id" ref="profile_khalid"/>
+            <field name="date">2025-11-02</field>
+            <field name="hours">10.0</field>
+            <field name="description">Volunteered to conduct sustainability audit of company supply chain partners to ensure ethical practices.</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_lin_1" model="csr.activity">
+            <field name="name">Renewable Energy Research Paper</field>
+            <field name="employee_profile_id" ref="profile_lin"/>
+            <field name="date">2025-10-30</field>
+            <field name="hours">12.0</field>
+            <field name="description">Published open-access research paper on affordable solar energy solutions for rural communities.</field>
+            <field name="status">approved</field>
+        </record>
+        <record id="activity_youssef_1" model="csr.activity">
+            <field name="name">Sales Training for Small Business Owners</field>
+            <field name="employee_profile_id" ref="profile_youssef"/>
+            <field name="date">2025-11-06</field>
+            <field name="hours">8.0</field>
+            <field name="description">Provided free sales training and mentorship to local small business owners from disadvantaged backgrounds.</field>
+            <field name="status">submitted</field>
+        </record>
+        <record id="activity_david_2" model="csr.activity">
+            <field name="name">Open Source Project Contribution</field>
+            <field name="employee_profile_id" ref="profile_david"/>
+            <field name="date">2025-11-10</field>
+            <field name="hours">5.0</field>
+            <field name="description">Contributed to open source project that develops accessibility tools for visually impaired users.</field>
+            <field name="status">draft</field>
+        </record>
+        <record id="activity_fatima_2" model="csr.activity">
+            <field name="name">Diversity &amp; Inclusion Training Session</field>
+            <field name="employee_profile_id" ref="profile_fatima"/>
+            <field name="date">2025-11-12</field>
+            <field name="hours">3.0</field>
+            <field name="description">Organized and led D&amp;I training session for local SMEs to promote inclusive workplace practices.</field>
+            <field name="status">submitted</field>
+        </record>
+
     </data>
 </odoo>

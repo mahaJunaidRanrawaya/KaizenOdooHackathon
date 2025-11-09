@@ -31,7 +31,8 @@
                 <field name="improvement_rank_display"/>
                 <field name="point_improvement"/>
                 <field name="image_128"/>
-                <field name="department_id"/> <templates>
+                <field name="department_id"/>
+                <templates>
                     <t t-name="card">
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="o_kanban_image">
@@ -69,15 +70,20 @@
                                     </div>
                                     <small class="text-muted">Progress towards 5000 points goal</small>
                                 </div>
+                                
                                 <div class="mt-3">
                                     <button name="action_redeem_reward" type="object" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-gift"/> Redeem Rewards
+                                        <i class="fa fa-gift"/> Redeem
                                     </button>
                                     <button name="action_view_activities" type="object" class="btn btn-secondary btn-sm ms-2">
                                         <i class="fa fa-list"/> Activities
                                     </button>
+                                    <button name="action_share_on_linkedin" type="object" class="btn btn-info btn-sm ms-2" style="background-color: #0077B5; border-color: #0077B5;">
+                                        <i class="fa fa-linkedin"/> Share
+                                    </button>
                                 </div>
-                            </div>
+                                
+                                </div>
                         </div>
                     </t>
                 </templates>

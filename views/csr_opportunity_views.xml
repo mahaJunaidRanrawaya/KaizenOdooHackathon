@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="view_csr_opportunity_kanban" model="ir.ui.view">
+        <field name="name">csr.opportunity.kanban</field>
+        <field name="model">csr.opportunity</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard">
+                <field name="name"/>
+                <field name="ngo"/>
+                <field name="date"/>
+                <field name="location_name"/>
+                <field name="linked_sdg"/>
+                
+                <header>
+                    <div class="o_kanban_header" style="padding: 16px;">
+                        <h4 class="mb-2">Simulated Live Event Map</h4>
+                        <p class="text-muted">
+                            This is a demo of a live map feed showing nearby volunteering opportunities.
+                            (No API key required for this demo).
+                        </p>
+                        <div style="border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden;">
+                            <iframe 
+                                width="100%" 
+                                height="350" 
+                                frameborder="0" 
+                                scrolling="no" 
+                                marginheight="0" 
+                                marginwidth="0" 
+                                src="https://www.openstreetmap.org/export/embed.html?bbox=55.2014%2C25.1824%2C55.2214%2C25.2024&amp;layer=mapnik&amp;marker=25.1924%2C55.2114"
+                                style="border: 0">
+                            </iframe>
+                        </div>
+                    </div>
+                </header>
+                
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <span class="badge text-bg-primary me-2" title="Linked SDG">
+                                        <i class="fa fa-tag"/> <field name="linked_sdg"/>
+                                    </span>
+                                </div>
+                                <div class="mt-2">
+                                    <div><i class="fa fa-building-o me-2"/> <field name="ngo"/></div>
+                                    <div><i class="fa fa-calendar-o me-2"/> <field name="date" widget="date"/></div>
+                                    <div><i class="fa fa-map-marker me-2"/> <field name="location_name"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="view_csr_opportunity_list" model="ir.ui.view">
         <field name="name">csr.opportunity.list</field>
         <field name="model">csr.opportunity</field>
@@ -35,6 +92,6 @@
     <record id="action_csr_opportunity_tree" model="ir.actions.act_window">
         <field name="name">Opportunities</field>
         <field name="res_model">csr.opportunity</field>
-        <field name="view_mode">list,form</field>
-    </record>
+        <field name="view_mode">kanban,list,form</field> </record>
+    
 </odoo>

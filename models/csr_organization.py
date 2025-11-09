@@ -15,16 +15,16 @@ class CSROrganization(models.Model):
         string="SDG Contribution Metrics (JSON)",
         compute='_compute_sdg_metrics',
         store=True,
-        compute_sudo=False, 
+        compute_sudo=False,  
         help="JSON string storing total impact points per SDG."
     )
     
     # Field to display the lacking SDGs nicely
     lacking_sdgs_display = fields.Char(
-        string="Lacking SDGs", 
-        compute='_compute_lacking_sdgs_display', 
+        string="Lacking SDGs",  
+        compute='_compute_lacking_sdgs_display',  
         store=False,
-        compute_sudo=False 
+        compute_sudo=False  
     )
     
     sdg_metrics_html = fields.Html(
@@ -73,7 +73,7 @@ class CSROrganization(models.Model):
     
     # --- FIX: Added the missing field from the XML view ---
     opportunity_ids = fields.Many2many(
-        'csr.opportunity', 
+        'csr.opportunity',  
         string="Strategic Opportunities",
         compute='_compute_opportunity_ids',
         store=False
@@ -83,8 +83,7 @@ class CSROrganization(models.Model):
     def _compute_organization_metrics(self):
         """
         This compute method should be triggered manually by 'csr.activity'
-        or run on a cron job. For this demo, we'll make it depend on 'name'
-        so it computes once.
+        or run on a cron job.
         """
         for rec in self:
             approved_activities = self.env['csr.activity'].search([('status', '=', 'approved')])
@@ -107,7 +106,7 @@ class CSROrganization(models.Model):
             
             # 2. Calculate percentage contribution and store as JSON
             sdg_percentages = {}
-            sdg_codes = [f"sdg{i}" for i in range(1, 18)]
+            sdg_codes = [f"sdg{i}" for i in range(1, 18)] + ['other']
             
             for sdg in sdg_codes:
                 impact = sdg_impact.get(sdg, 0)
@@ -163,7 +162,7 @@ class CSROrganization(models.Model):
             html_cards = []
             # Filter 'other' and sort by SDG number
             sdg_items = sorted(
-                [item for item in sdg_data.items() if item[0] != 'other'], 
+                [item for item in sdg_data.items() if item[0] != 'other'],  
                 key=lambda x: int(x[0].replace('sdg', ''))
             )
 
@@ -227,7 +226,7 @@ class CSROrganization(models.Model):
                 rec.recommendation_text = "<p>All SDG contributions are well-balanced or data is pending. Keep up the great work!</p>"
 
     # --- FIX: Added compute method for the 'opportunity_ids' field ---
-    @api.depends('sdg_metrics') 
+    @api.depends('sdg_metrics')  
     def _compute_opportunity_ids(self):
         """
         Finds opportunities that match the top 3 lacking SDGs.
